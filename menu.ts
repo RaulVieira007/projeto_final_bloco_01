@@ -1,6 +1,12 @@
 import readlineSync from "readline-sync";
+import { Tenis } from "./src/model/Tenis";
+
+// const tenis1 = new Tenis(1, "Air Max 90", 599.99, "Nike", 42);
+// const tenis2 = new Tenis(2, "Minuzo Wave", 429.99, "Mizuno", 39);
+let listaTenis: Tenis[] = [];
 
 let opcao: number;
+
 
 do {
     console.clear();
@@ -20,9 +26,27 @@ do {
     switch(opcao){
         case 1:
             console.log("Cadastrar Produto!");
+
+            const id = readlineSync.questionInt("ID: ");
+            const nome = readlineSync.question("Nome: ");
+            const preco = readlineSync.questionInt("Preço: ");
+            const marca = readlineSync.question("Marca: ");
+            const tamanho = readlineSync.questionInt("Tamanho: ");
+
+            const novoTenis = new Tenis(id, nome, preco, marca, tamanho);
+            listaTenis.push(novoTenis);
+
+            console.log("\nProduto Cadastrado com sucesso!");
             break;
         case 2:
             console.log("Listando Produtos!");
+
+            if(listaTenis.length === 0){
+                console.log("Nenhum Tênis cadastrado.");
+            }else{
+                listaTenis.forEach((Tenis) => Tenis.mostrarDetalhes());
+            }
+            
             break;
         case 3:
             console.log("Alterar Produto!");
@@ -34,7 +58,8 @@ do {
             console.log("Opção inválida. Tente Novamente")
     }
 
-    if (opcao !==4) readlineSync.question("\nPressione ENTER para continuar...");
+    if (opcao !==4) 
+        readlineSync.question("\nPressione ENTER para continuar...");
 
 }while(opcao !== 4)
 
