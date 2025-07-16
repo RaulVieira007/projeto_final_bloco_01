@@ -1,9 +1,8 @@
 import readlineSync from "readline-sync";
 import { Tenis } from "./src/model/Tenis";
+import { TenisController } from "./src/controller/TenisController";
 
-// const tenis1 = new Tenis(1, "Air Max 90", 599.99, "Nike", 42);
-// const tenis2 = new Tenis(2, "Minuzo Wave", 429.99, "Mizuno", 39);
-let listaTenis: Tenis[] = [];
+const controller = new TenisController;
 
 let opcao: number;
 
@@ -17,7 +16,7 @@ do {
     
     console.log("*****Menu Principal*******");
     console.log("***1- Cadastrar Produto***");
-    console.log("***2- Listar Produto******");
+    console.log("***2- Listar Produtos******");
     console.log("***3- Alterar Produto*****");
     console.log("***4- Sair/Exit **********");
 
@@ -29,30 +28,58 @@ do {
 
             const id = readlineSync.questionInt("ID: ");
             const nome = readlineSync.question("Nome: ");
-            const preco = readlineSync.questionInt("Preço: ");
+            const preco = readlineSync.questionFloat("Preço: ");
             const marca = readlineSync.question("Marca: ");
             const tamanho = readlineSync.questionInt("Tamanho: ");
 
             const novoTenis = new Tenis(id, nome, preco, marca, tamanho);
-            listaTenis.push(novoTenis);
-
-            console.log("\nProduto Cadastrado com sucesso!");
+            
+            try{
+                controller.adicionar(novoTenis);
+                console.log("\nProduto cadastrado com sucesso!");
+            }catch(Error) {
+                console.log("\nErro ao cadastrar" + (Error));
+            }
             break;
         case 2:
             console.log("Listando Produtos!");
 
-            if(listaTenis.length === 0){
-                console.log("Nenhum Tênis cadastrado.");
+            const lista = controller.listar();
+
+            if(lista.length === 0){
+                console.log("Nenhum Tênis cadastrado..");
             }else{
-                listaTenis.forEach((Tenis) => Tenis.mostrarDetalhes());
+                lista.forEach(t => t.mostrarDetalhes());
             }
-            
             break;
         case 3:
             console.log("Alterar Produto!");
+            const idAtualizar = readlineSync.questionInt("Informe o ID do tênis para deletar")
+
+            const tenisExiste = controller.listar().find(t => t.getId() === idAtualizar);
+
+            if(!tenisExiste) {
+                console.log(`Nenhum tênis com ID ${idAtualizar} Foi encontrado.`);
+                break;
+            }
+
+            const novoNome = readlineSync.question("Novo nome:");
+            const novoPreco = readlineSync.questionFloat("Novo Preço:");
+            const novoMarca = readlineSync.question("Nova Marca:");
+            const novoTamanho = readlineSync.questionInt("Novo Tamanho:");
+
+            const tenisAtualizado = new Tenis(idAtualizar, novoNome, novoPreco, novoMarca, novoTamanho);
+
+            try {
+                controller.atualizar(idAtualizar, tenisAtualizado);
+                console.log("Produto Atualizado");
+            }catch (Error) {
+                console.log("Erro ao Atualizar: " + (Error));
+            }
             break;
         case 4:
             console.log("Saindo...");
+            sobre();
             break;
         default:
             console.log("Opção inválida. Tente Novamente")

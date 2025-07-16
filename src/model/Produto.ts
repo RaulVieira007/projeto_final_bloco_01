@@ -8,4 +8,9 @@ export abstract class Produto{
     this.nome = nome;
     this.preco = preco;
    }
+
+   public getId(): number {
+        return this.id;
+    }
+
 }
