@@ -1,6 +1,7 @@
 import readlineSync from "readline-sync";
 import { Tenis } from "./src/model/Tenis";
 import { TenisController } from "./src/controller/TenisController";
+import { colors } from "./src/util/Colors";
 
 const controller = new TenisController;
 
@@ -10,15 +11,14 @@ let opcao: number;
 do {
     console.clear();
 
-    console.log("*************************");
-    console.log("*****Raridade nos Pé*****");
-    console.log("*************************");
-    
-    console.log("*****Menu Principal*******");
-    console.log("***1- Cadastrar Produto***");
-    console.log("***2- Listar Produtos******");
-    console.log("***3- Alterar Produto*****");
-    console.log("***4- Sair/Exit **********");
+    console.log(colors.bg.black, colors.fg.yellow,"*************************");
+    console.log(colors.bg.black, colors.fg.yellow,"*****Raridade nos Pé*****");
+    console.log(colors.bg.black, colors.fg.yellow,"*************************");
+    console.log(colors.bg.black, colors.fg.yellow,"*****Menu Principal*******");
+    console.log(colors.bg.black, colors.fg.yellow,"***1- Cadastrar Produto***");
+    console.log(colors.bg.black, colors.fg.yellow,"***2- Listar Produtos******");
+    console.log(colors.bg.black, colors.fg.yellow,"***3- Alterar Produto*****");
+    console.log(colors.bg.black, colors.fg.yellow,"***4- Sair/Exit **********");
 
     opcao = readlineSync.questionInt("Escolha uma opção!");
 
@@ -91,10 +91,10 @@ do {
 }while(opcao !== 4)
 
 export function sobre(): void{
-    console.log("########################################");
-    console.log("Projeto Desenvolvido por:               ");
-    console.log(" Raul da Silva Vieira"                   );
-    console.log("E-mail: raul.vieiras2001@gmail.com"      );
-    console.log("GitHub: https://github.com/RaulVieira007");
-    console.log("########################################");
+    console.log(colors.bg.black, colors.fg.yellow,"########################################");
+    console.log(colors.bg.black, colors.fg.yellow,"Projeto Desenvolvido por:               ");
+    console.log(colors.bg.black, colors.fg.yellow," Raul da Silva Vieira"                   );
+    console.log(colors.bg.black, colors.fg.yellow,"E-mail: raul.vieiras2001@gmail.com"      );
+    console.log(colors.bg.black, colors.fg.yellow,"GitHub: https://github.com/RaulVieira007");
+    console.log(colors.bg.black, colors.fg.yellow,"########################################");
 }
